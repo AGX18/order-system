@@ -1,5 +1,6 @@
 package io.agx.order_service;
 
+import io.agx.common.Order;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,7 @@ import java.util.UUID;
 @Slf4j
 public class OrderProducer {
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, Order> kafkaTemplate;
 
     public void sendOrder(OrderRequest request) {
         Order order = Order.builder()
@@ -20,8 +21,7 @@ public class OrderProducer {
                 .quantity(request.getQuantity())
                 .build();
 
-        String message = order.getOrderId() + ":" + order.getProduct() + ":" + order.getQuantity();
-        kafkaTemplate.send("order-placed", message);
-        log.info("Order sent to Kafka: {}", message);
+        kafkaTemplate.send("order-placed", order);
+        log.info("Order sent to Kafka: {}", order);
     }
 }

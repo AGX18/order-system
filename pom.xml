@@ -16,9 +16,11 @@
 
 	<properties>
 		<java.version>25</java.version>
+		<flyway.version>11.8.0</flyway.version>
 	</properties>
 
 	<modules>
+		<module>common</module>
 		<module>order-service</module>
 		<module>inventory-service</module>
 		<module>notification-service</module>
